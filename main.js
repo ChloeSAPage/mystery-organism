@@ -79,11 +79,6 @@ const pAequorFactory = (speciminNum, dna) => {
     };
 };
 
-// const dna = mockUpStrand();
-// console.log(dna)
-// const pAequor = pAequorFactory(1, dna);
-// pAequor.complementStrand()
-
 const createArmy = (target) => {
     const pAequorArmy = [];
     for (let i = 0; i < target; i++) {
@@ -94,3 +89,5 @@ const createArmy = (target) => {
 };
 
 createArmy(30);
+
+const findClosestMatch = () => {};
