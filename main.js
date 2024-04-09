@@ -84,9 +84,13 @@ const pAequorFactory = (speciminNum, dna) => {
 // const pAequor = pAequorFactory(1, dna);
 // pAequor.complementStrand()
 
-const pAequorArmy = [];
+const createArmy = (target) => {
+    const pAequorArmy = [];
+    for (let i = 0; i < target; i++) {
+        let dna = mockUpStrand();
+        pAequorArmy.push(pAequorFactory(i, dna));
+    }
+    console.log(pAequorArmy);
+};
 
-for (let i = 0; i < 30; i++) {
-    let dna = mockUpStrand();
-    pAequorArmy.push(pAequorFactory(i, dna));
-}
+createArmy(30);
