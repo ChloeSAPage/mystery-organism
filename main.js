@@ -19,11 +19,14 @@ const pAequorFactory = (speciminNum, dna) => {
         dna,
         mutate() {
             let randBase = returnRandBase();
-            let index = Math.floor(Math.random() * this.dna.length);
-            let chosenBase = this.dna[index];
+            // choose random index
+            const index = Math.floor(Math.random() * this.dna.length);
+            const chosenBase = this.dna[index];
+            // if the bases are the same then choose another one until they are not
             while (randBase === chosenBase) {
                 randBase = returnRandBase();
             }
+            // change the base
             this.dna[index] = randBase;
             console.log(`The index of the base that was changed is: ${index}`);
             return this.dna;
@@ -31,7 +34,7 @@ const pAequorFactory = (speciminNum, dna) => {
         compareDNA(pAequorObj) {
             let givenDNA = pAequorObj.dna;
             let matches = 0;
-
+            // go through each DNA sequence and count how many bases match
             for (let i = 0; i < this.dna.length; i++) {
                 if (this.dna[i] === givenDNA[i]) {
                     matches += 1;
@@ -43,26 +46,47 @@ const pAequorFactory = (speciminNum, dna) => {
             console.log(`${(matches / this.dna.length) * 100}% in common`);
         },
         willLikelySurvive() {
+            // get the number of bases that are C or G
             const CG = this.dna.filter((base) => base === "C" || base === "G");
+            // work out the percentage of DNA that is C or G
             const percentageCG = (CG.length / this.dna.length) * 100;
-            console.log(percentageCG)
-            if (percentageCG >= 60){
-              return true
+            console.log(percentageCG);
+            if (percentageCG >= 60) {
+                return true;
             }
-            return false
+            return false;
+        },
+        complementStrand() {
+            const complementStrand = [];
+            this.dna.forEach((base) => {
+                switch (base) {
+                    case "C":
+                        complementStrand.push("G");
+                        break;
+                    case "G":
+                        complementStrand.push("C");
+                        break;
+                    case "A":
+                        complementStrand.push("T");
+                        break;
+                    case "T":
+                        complementStrand.push("A");
+                        break;
+                }
+            });
+            console.log(complementStrand);
         },
     };
 };
 
 // const dna = mockUpStrand();
-// const dna2 = mockUpStrand();
-
+// console.log(dna)
 // const pAequor = pAequorFactory(1, dna);
-// const pAequor2 = pAequorFactory(2, dna2);
+// pAequor.complementStrand()
 
-// console.log(pAequor.willLikelySurvive())
-// // pAequor.mutate();
-// // console.log(pAequor2.dna);
-// // pAequor.compareDNA(pAequor2)
+const pAequorArmy = [];
 
-
+for (let i = 0; i < 30; i++) {
+    let dna = mockUpStrand();
+    pAequorArmy.push(pAequorFactory(i, dna));
+}
