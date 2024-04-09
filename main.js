@@ -25,33 +25,44 @@ const pAequorFactory = (speciminNum, dna) => {
                 randBase = returnRandBase();
             }
             this.dna[index] = randBase;
-            console.log(`The index of the base that was changed is: ${index}`)
-            return this.dna
+            console.log(`The index of the base that was changed is: ${index}`);
+            return this.dna;
         },
         compareDNA(pAequorObj) {
-          let givenDNA = pAequorObj.dna
-          let matches = 0
+            let givenDNA = pAequorObj.dna;
+            let matches = 0;
 
-          for (let i=0; i<this.dna.length;i++){
-            if (this.dna[i] === givenDNA[i]){
-              matches += 1
-              console.log(`Match found at index: ${i} where base is ${dna[i]}`)
+            for (let i = 0; i < this.dna.length; i++) {
+                if (this.dna[i] === givenDNA[i]) {
+                    matches += 1;
+                    console.log(
+                        `Match found at index: ${i} where base is ${dna[i]}`
+                    );
+                }
             }
-          }
-          const percentageMatch = (matches / this.dna.length) * 100
-          console.log(`${percentageMatch}% in common`)
-        }
+            console.log(`${(matches / this.dna.length) * 100}% in common`);
+        },
+        willLikelySurvive() {
+            const CG = this.dna.filter((base) => base === "C" || base === "G");
+            const percentageCG = (CG.length / this.dna.length) * 100;
+            console.log(percentageCG)
+            if (percentageCG >= 60){
+              return true
+            }
+            return false
+        },
     };
 };
 
-const dna = mockUpStrand();
-const dna2 = mockUpStrand();
+// const dna = mockUpStrand();
+// const dna2 = mockUpStrand();
 
-const pAequor = pAequorFactory(1, dna);
-const pAequor2 = pAequorFactory(2, dna2);
+// const pAequor = pAequorFactory(1, dna);
+// const pAequor2 = pAequorFactory(2, dna2);
 
-console.log(pAequor.dna);
-// pAequor.mutate();
-console.log(pAequor2.dna);
-pAequor.compareDNA(pAequor2)
+// console.log(pAequor.willLikelySurvive())
+// // pAequor.mutate();
+// // console.log(pAequor2.dna);
+// // pAequor.compareDNA(pAequor2)
+
 
