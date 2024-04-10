@@ -13,9 +13,9 @@ const mockUpStrand = () => {
     return newStrand;
 };
 
-const pAequorFactory = (speciminNum, dna) => {
+const pAequorFactory = (specimenNum, dna) => {
     return {
-        speciminNum,
+        specimenNum,
         dna,
         mutate() {
             let randBase = returnRandBase();
@@ -28,7 +28,6 @@ const pAequorFactory = (speciminNum, dna) => {
             }
             // change the base
             this.dna[index] = randBase;
-            console.log(`The index of the base that was changed is: ${index}`);
             return this.dna;
         },
         compareDNA(pAequorObj) {
@@ -38,12 +37,10 @@ const pAequorFactory = (speciminNum, dna) => {
             for (let i = 0; i < this.dna.length; i++) {
                 if (this.dna[i] === givenDNA[i]) {
                     matches += 1;
-                    console.log(
-                        `Match found at index: ${i} where base is ${dna[i]}`
-                    );
                 }
             }
-            console.log(`${(matches / this.dna.length) * 100}% in common`);
+            const percentage = (matches / this.dna.length) * 100;
+            return percentage;
         },
         willLikelySurvive() {
             // get the number of bases that are C or G
@@ -81,13 +78,37 @@ const pAequorFactory = (speciminNum, dna) => {
 
 const createArmy = (target) => {
     const pAequorArmy = [];
-    for (let i = 0; i < target; i++) {
+    for (let i = 1; i < target + 1; i++) {
         let dna = mockUpStrand();
         pAequorArmy.push(pAequorFactory(i, dna));
     }
-    console.log(pAequorArmy);
+    return pAequorArmy;
 };
 
-createArmy(30);
+const pAequorArmy = createArmy(5);
 
-const findClosestMatch = () => {};
+const findClosestMatch = (pAequorArmy) => {
+    // go through the Army
+    let highestPercent = 0;
+    let specimenNum1;
+    let specimenNum2;
+    for (let member of pAequorArmy) {
+        for (let member2 of pAequorArmy) {
+            // compare the 2, ensuring we don't compare the same one.
+            if (member !== member2) {
+                let percentage = member.compareDNA(member2);
+                // store the highest %
+                if (percentage > highestPercent) {
+                    highestPercent = percentage;
+                    specimenNum1 = member.specimenNum;
+                    specimenNum2 = member2.specimenNum;
+                }
+            }
+        }
+    }
+    console.log(
+        `The most closely related is Specimen number: ${specimenNum1} and ${specimenNum2} with ${highestPercent}% similar DNA`
+    );
+};
+
+findClosestMatch(pAequorArmy);
